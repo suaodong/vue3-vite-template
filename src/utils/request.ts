@@ -8,7 +8,7 @@ export type ApiResponse<T> = {
 }
 
 const http = axios.create({
-  baseURL: '/api',
+  baseURL: 'http://127.0.0.1:7001/', //mock：'/api'
   timeout: 15000
 })
 
@@ -25,7 +25,7 @@ http.interceptors.response.use(
   response => {
     const payload = response.data as ApiResponse<unknown>
     if (payload && typeof payload.code === 'number') {
-      if (payload.code === 0) return payload
+      if (payload.code === 200 || payload.code === 0) return payload
       return Promise.reject(new Error(payload.message || 'Request Error'))
     }
     return response.data
